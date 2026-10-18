@@ -1,0 +1,32 @@
+#  Death Lane
+
+A high-speed, 2D highway survival racing web game built with vanilla JavaScript, HTML5 Canvas, and modern CSS. Dodge incoming traffic, survive the accelerating highway speed, and set a new high score!
+
+---
+
+##  Features
+
+* **Advance Visuals & Graphics**: Dynamic highway asphalt with moving dash lanes, shoulder curbs, metallic gradient car textures, headlight beam projections, and smooth exhaust particle effects.
+* **Auto-Speed Progression**: The game automatically increases speed every 10 seconds to keep the challenge intense.
+* **Pure Web Audio API Sound System**: Built-in procedural sound generator for realistic engine rumbling pitch shifting, ignition/start chimes, and crash explosion noise effects (no external audio files required!).
+* **Local High-Score Persistence**: Automatically saves and updates your best score using the browser's `localStorage`.
+* **Fully Responsive / Mobile Friendly**: Optimized touch controls (Left/Right buttons) alongside traditional desktop keyboard controls (`A`/`D` or Left/Right Arrow keys).
+* **Two-Stage Screen Flow**: Sleek Start Screen leading into the active gameplay arena.
+
+---
+
+## 🛠️ Tech Stack
+
+* **HTML5** (Structure & Canvas Rendering)
+* **CSS3** (Styling, Flexbox layouts, Custom animations & gradients)
+* **JavaScript (ES6)** (Game Loop, Collision Detection, Audio Synthesis, and State Management)
+
+---
+
+##  Project Structure
+
+Death-Lane/
+
+ index.html       # Main HTML file (Start screen, game HUD, canvas, touch controls)
+ style.css        # Styling and layout management for mobile & desktop screens
+ game.js          # Core game logic, rendering engine, audio synthesizer & controls
