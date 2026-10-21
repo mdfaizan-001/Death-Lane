@@ -264,24 +264,19 @@ function drawCar(car, isPlayer = false) {
   bodyGrad.addColorStop(0, car.color);
   bodyGrad.addColorStop(0.5, "#ffffff");
   bodyGrad.addColorStop(1, car.color);
-
   ctx.fillStyle = bodyGrad;
   ctx.fillRect(car.x, car.y, car.width, car.height);
-
   ctx.fillStyle = "#111116";
   ctx.fillRect(car.x + 3, car.y + 14, car.width - 6, 18);
   ctx.fillRect(car.x + 3, car.y + 44, car.width - 6, 10);
-
   ctx.fillStyle = car.color;
   ctx.fillRect(car.x - 2, car.y + 18, 2, 6);
   ctx.fillRect(car.x + car.width, car.y + 18, 2, 6);
-
   ctx.fillStyle = "#0a0a0a";
   ctx.fillRect(car.x - 2, car.y + 9, 2, 12);
   ctx.fillRect(car.x + car.width, car.y + 9, 2, 12);
   ctx.fillRect(car.x - 2, car.y + 43, 2, 12);
   ctx.fillRect(car.x + car.width, car.y + 43, 2, 12);
-
   if (isPlayer) {
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(car.x + 2, car.y + 1, 6, 3);
