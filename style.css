@@ -3,6 +3,7 @@
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
+
 body {
   background-color: #08080a;
   color: #fff;
@@ -16,6 +17,7 @@ body {
   margin: 0;
   overflow: hidden;
 }
+
 .screen {
   position: absolute;
   width: 100%;
@@ -30,6 +32,7 @@ body {
 .hidden {
   display: none !important;
 }
+
 /* Splash Screen */
 .splash-content {
   display: flex;
@@ -63,6 +66,7 @@ body {
   letter-spacing: 2px;
   margin-bottom: 25px;
 }
+
 #startBtn, #restartBtn {
   background: linear-gradient(135deg, #ff2a3b, #b30010);
   color: white;
@@ -78,6 +82,7 @@ body {
 #startBtn:active, #restartBtn:active {
   transform: scale(0.95);
 }
+
 /* Footer Branding */
 .footer-brand {
   font-size: 11px;
@@ -88,6 +93,7 @@ body {
   padding-bottom: 2px;
   text-shadow: 0 0 10px rgba(255, 42, 59, 0.5);
 }
+
 /* Game HUD & Canvas */
 .hud {
   display: flex;
@@ -115,6 +121,7 @@ canvas {
   height: auto;
   max-height: 48vh; /* Mobile screen ke hisaab se auto adjust hoga */
 }
+
 /* Game Over Overlay */
 #gameOverScreen {
   position: absolute;
@@ -141,6 +148,7 @@ canvas {
   font-weight: bold;
   margin: 8px 0;
 }
+
 /* Touch Controls */
 .touch-controls {
   display: flex;
@@ -161,6 +169,8 @@ canvas {
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
+
 .touch-controls button:active {
   background: #ff2a3b;
+  
 }
