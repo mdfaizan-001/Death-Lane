@@ -19,7 +19,6 @@ let roadOffsetY = 0;
 let speedTimer = null;
 let particles = [];
 highScoreEl.innerText = highScore;
-
 // Player Car Configuration
 const player = {
   x: canvas.width / 2 - 18,
@@ -32,7 +31,6 @@ const player = {
 };
 let traffic = [];
 const carColors = ["#00d2ff", "#ffb703", "#06d6a0", "#9d4edd", "#e0e1dd"];
-
 // --- AUDIO SYNTHESIZER ---
 let audioCtx = null;
 let engineOsc = null;
@@ -63,7 +61,6 @@ function updateEnginePitch() {
     engineOsc.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.1);
   }
 }
-
 function stopEngineSound() {
   if (engineOsc) {
     try {
@@ -87,7 +84,6 @@ function playStartSound() {
   osc.start();
   osc.stop(audioCtx.currentTime + 0.4);
 }
-
 function playCrashSound() {
   initAudio();
   let bufferSize = audioCtx.sampleRate * 0.6;
@@ -110,7 +106,6 @@ function playCrashSound() {
   gain.connect(audioCtx.destination);
   noise.start();
 }
-
 // --- CONTROLS ---
 startBtn.addEventListener("click", () => {
   startScreen.classList.add("hidden");
@@ -131,7 +126,6 @@ document.addEventListener("keyup", (e) => {
     player.dx = 0;
   }
 });
-
 // Mobile Controls
 leftBtn.addEventListener("touchstart", (e) => { e.preventDefault(); player.dx = -player.speed; });
 leftBtn.addEventListener("touchend", () => { player.dx = 0; });
@@ -141,7 +135,6 @@ leftBtn.addEventListener("mousedown", () => { player.dx = -player.speed; });
 leftBtn.addEventListener("mouseup", () => { player.dx = 0; });
 rightBtn.addEventListener("mousedown", () => { player.dx = player.speed; });
 rightBtn.addEventListener("mouseup", () => { player.dx = 0; });
-
 // --- GAME CORE ---
 function startGame() {
   traffic = [];
@@ -164,7 +157,6 @@ function startGame() {
 
   gameLoop();
 }
-
 function spawnTraffic() {
   const lanes = [20, 100, 180, 260];
   const randomLane = lanes[Math.floor(Math.random() * lanes.length)];
@@ -183,14 +175,11 @@ function spawnTraffic() {
 }
 function update() {
   if (!gameRunning) return;
-
   roadOffsetY += currentSpeed;
   if (roadOffsetY > 40) roadOffsetY = 0;
-
   player.x += player.dx;
   if (player.x < 12) player.x = 12;
   if (player.x + player.width > canvas.width - 12) player.x = canvas.width - 12 - player.width;
-
   if (Math.random() < 0.6) {
     particles.push({
       x: player.x + player.width / 2 + (Math.random() * 6 - 3),
@@ -231,7 +220,6 @@ function update() {
     }
   }
 }
-
 function drawRoad() {
   ctx.fillStyle = "#22222b";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -331,7 +319,5 @@ function endGame() {
   } else {
     newHighScoreText.classList.add("hidden");
   }
-  
   gameOverScreen.classList.remove("hidden");
-  
 }
