@@ -14,12 +14,15 @@ const rightBtn = document.getElementById("rightBtn");
 let gameRunning = false;
 let currentSpeed = 5;
 let score = 0;
+
 let highScore = localStorage.getItem("death_lane_highscore") || 0;
 let roadOffsetY = 0;
 let speedTimer = null;
 let particles = [];
 highScoreEl.innerText = highScore;
+
 // Player Car Configuration
+
 const player = {
   x: canvas.width / 2 - 18,
   y: canvas.height - 100,
@@ -29,8 +32,10 @@ const player = {
   dx: 0,
   color: "#ff2a3b"
 };
+
 let traffic = [];
 const carColors = ["#00d2ff", "#ffb703", "#06d6a0", "#9d4edd", "#e0e1dd"];
+
 // --- AUDIO SYNTHESIZER ---
 let audioCtx = null;
 let engineOsc = null;
@@ -43,6 +48,7 @@ function initAudio() {
     audioCtx.resume();
   }
 }
+
 function startEngineSound() {
   initAudio();
   stopEngineSound();
@@ -55,6 +61,7 @@ function startEngineSound() {
   engineGain.connect(audioCtx.destination);
   engineOsc.start();
 }
+
 function updateEnginePitch() {
   if (engineOsc && audioCtx) {
     let freq = 55 + (currentSpeed - 5) * 12;
@@ -70,6 +77,7 @@ function stopEngineSound() {
     engineOsc = null;
   }
 }
+
 function playStartSound() {
   initAudio();
   let osc = audioCtx.createOscillator();
@@ -84,6 +92,7 @@ function playStartSound() {
   osc.start();
   osc.stop(audioCtx.currentTime + 0.4);
 }
+
 function playCrashSound() {
   initAudio();
   let bufferSize = audioCtx.sampleRate * 0.6;
@@ -92,6 +101,7 @@ function playCrashSound() {
   for (let i = 0; i < bufferSize; i++) {
     data[i] = Math.random() * 2 - 1;
   }
+  
   let noise = audioCtx.createBufferSource();
   noise.buffer = buffer;
   let filter = audioCtx.createBiquadFilter();
@@ -106,6 +116,7 @@ function playCrashSound() {
   gain.connect(audioCtx.destination);
   noise.start();
 }
+
 // --- CONTROLS ---
 startBtn.addEventListener("click", () => {
   startScreen.classList.add("hidden");
@@ -116,6 +127,7 @@ restartBtn.addEventListener("click", () => {
   gameOverScreen.classList.add("hidden");
   startGame();
 });
+
 document.addEventListener("keydown", (e) => {
   if (!gameRunning) return;
   if (e.key === "ArrowLeft" || e.key === "a") player.dx = -player.speed;
@@ -126,6 +138,7 @@ document.addEventListener("keyup", (e) => {
     player.dx = 0;
   }
 });
+
 // Mobile Controls
 leftBtn.addEventListener("touchstart", (e) => { e.preventDefault(); player.dx = -player.speed; });
 leftBtn.addEventListener("touchend", () => { player.dx = 0; });
@@ -135,6 +148,7 @@ leftBtn.addEventListener("mousedown", () => { player.dx = -player.speed; });
 leftBtn.addEventListener("mouseup", () => { player.dx = 0; });
 rightBtn.addEventListener("mousedown", () => { player.dx = player.speed; });
 rightBtn.addEventListener("mouseup", () => { player.dx = 0; });
+
 // --- GAME CORE ---
 function startGame() {
   traffic = [];
@@ -157,6 +171,7 @@ function startGame() {
 
   gameLoop();
 }
+
 function spawnTraffic() {
   const lanes = [20, 100, 180, 260];
   const randomLane = lanes[Math.floor(Math.random() * lanes.length)];
@@ -173,6 +188,7 @@ function spawnTraffic() {
     });
   }
 }
+
 function update() {
   if (!gameRunning) return;
   roadOffsetY += currentSpeed;
@@ -189,6 +205,7 @@ function update() {
       alpha: 0.8
     });
   }
+  
   for (let i = 0; i < particles.length; i++) {
     let p = particles[i];
     p.y += p.vy;
@@ -220,6 +237,7 @@ function update() {
     }
   }
 }
+
 function drawRoad() {
   ctx.fillStyle = "#22222b";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -319,5 +337,6 @@ function endGame() {
   } else {
     newHighScoreText.classList.add("hidden");
   }
+  
   gameOverScreen.classList.remove("hidden");
 }
