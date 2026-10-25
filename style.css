@@ -3,6 +3,7 @@
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
+
 body {
   background-color: #08080a;
   color: #fff;
@@ -16,6 +17,7 @@ body {
   margin: 0;
   overflow: hidden;
 }
+
 .screen {
   position: absolute;
   width: 100%;
@@ -30,6 +32,7 @@ body {
 .hidden {
   display: none !important;
 }
+
 /* Splash Screen */
 .splash-content {
   display: flex;
@@ -49,6 +52,7 @@ body {
   0% { transform: translateY(0); }
   100% { transform: translateY(-10px); }
 }
+
 #gameTitle {
   font-size: 30px;
   letter-spacing: 3px;
@@ -63,6 +67,7 @@ body {
   letter-spacing: 2px;
   margin-bottom: 25px;
 }
+
 #startBtn, #restartBtn {
   background: linear-gradient(135deg, #ff2a3b, #b30010);
   color: white;
@@ -78,6 +83,7 @@ body {
 #startBtn:active, #restartBtn:active {
   transform: scale(0.95);
 }
+
 /* Footer Branding */
 .footer-brand {
   font-size: 11px;
