@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Death Lane</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  
   <!-- PAGE 1: START / SPLASH SCREEN -->
+  
   <div id="startScreen" class="screen">
     <div class="splash-content">
       <div class="splash-car-preview"> &#127950; </div>
@@ -17,7 +20,9 @@
     </div>
     <div class="footer-brand">Made by MFRN</div>
   </div>
+  
   <!-- PAGE 2: MAIN GAME CONTAINER -->
+  
   <div id="gameScreen" class="screen hidden">
     <div class="hud">
       <div>SCORE: <span id="score">0</span></div>
@@ -25,6 +30,7 @@
     </div>
     <div class="canvas-wrapper">
       <canvas id="gameCanvas" width="340" height="460"></canvas>
+      
       <!-- GAME OVER POPUP -->
       <div id="gameOverScreen" class="hidden">
         <h2> &#128128; YOU DIED &#128128; </h2>
@@ -33,13 +39,17 @@
         <button id="restartBtn">TRY AGAIN</button>
       </div>
     </div>
+    
     <!-- Mobile Touch Controls -->
+    
     <div class="touch-controls">
       <button id="leftBtn">&#9664; LEFT</button>
       <button id="rightBtn">RIGHT &#9654;</button>
     </div>
     <div class="footer-brand">Made by MFRN</div>
   </div>
+  
   <script src="game.js"></script>
+  
 </body>
 </html>
