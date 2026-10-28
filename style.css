@@ -3,6 +3,7 @@
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
+
 body {
   background-color: #08080a;
   color: #fff;
@@ -16,6 +17,7 @@ body {
   margin: 0;
   overflow: hidden;
 }
+
 .screen {
   position: absolute;
   width: 100%;
@@ -27,10 +29,13 @@ body {
   padding: 10px 10px 25px 10px; 
   background: radial-gradient(circle at center, #181824 0%, #08080a 100%);
 }
+
 .hidden {
   display: none !important;
 }
+
 /* Splash Screen */
+
 .splash-content {
   display: flex;
   flex-direction: column;
@@ -39,16 +44,19 @@ body {
   flex-grow: 1;
   text-align: center;
 }
+
 .splash-car-preview {
   font-size: 60px;
   margin-bottom: 10px;
   filter: drop-shadow(0 0 20px #e50914);
   animation: float 2s ease-in-out infinite alternate;
 }
+
 @keyframes float {
   0% { transform: translateY(0); }
   100% { transform: translateY(-10px); }
 }
+
 #gameTitle {
   font-size: 30px;
   letter-spacing: 3px;
@@ -57,12 +65,14 @@ body {
   font-weight: 900;
   text-shadow: 0 0 15px rgba(255, 42, 59, 0.6);
 }
+
 .tagline {
   color: #888;
   font-size: 12px;
   letter-spacing: 2px;
   margin-bottom: 25px;
 }
+
 #startBtn, #restartBtn {
   background: linear-gradient(135deg, #ff2a3b, #b30010);
   color: white;
@@ -75,9 +85,11 @@ body {
   cursor: pointer;
   box-shadow: 0 5px 20px rgba(255, 42, 59, 0.4);
 }
+
 #startBtn:active, #restartBtn:active {
   transform: scale(0.95);
 }
+
 /* Footer Branding */
 .footer-brand {
   font-size: 11px;
@@ -88,7 +100,9 @@ body {
   padding-bottom: 2px;
   text-shadow: 0 0 10px rgba(255, 42, 59, 0.5);
 }
+
 /* Game HUD & Canvas */
+
 .hud {
   display: flex;
   justify-content: space-between;
@@ -100,6 +114,7 @@ body {
   text-shadow: 0 0 8px rgba(0, 242, 255, 0.4);
   padding: 2px 0;
 }
+
 .canvas-wrapper {
   position: relative;
   border-radius: 8px;
@@ -108,6 +123,7 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
   flex-shrink: 1;
 }
+
 canvas {
   background: #1a1a1a;
   display: block;
@@ -115,7 +131,9 @@ canvas {
   height: auto;
   max-height: 48vh; 
 }
+
 /* Game Over Overlay */
+
 #gameOverScreen {
   position: absolute;
   top: 0;
@@ -130,18 +148,22 @@ canvas {
   text-align: center;
   backdrop-filter: blur(4px);
 }
+
 #gameOverScreen h2 {
   color: #ff2a3b;
   margin-bottom: 8px;
   font-size: 24px;
   text-shadow: 0 0 20px rgba(255, 42, 59, 0.8);
 }
+
 .new-high-text {
   color: #00ffcc;
   font-weight: bold;
   margin: 8px 0;
 }
+
 /* Touch Controls */
+
 .touch-controls {
   display: flex;
   justify-content: space-between;
@@ -149,6 +171,7 @@ canvas {
   max-width: 340px;
   padding: 4px 0;
 }
+
 .touch-controls button {
   background: #181824;
   color: #fff;
@@ -161,6 +184,8 @@ canvas {
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
+
 .touch-controls button:active {
   background: #ff2a3b; 
+  
 }
