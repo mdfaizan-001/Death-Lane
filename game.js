@@ -1,36 +1,25 @@
 const startScreen = document.getElementById("startScreen");
 const gameScreen = document.getElementById("gameScreen");
-
 const startBtn = document.getElementById("startBtn");
 const restartBtn = document.getElementById("restartBtn");
-
 const gameOverScreen = document.getElementById("gameOverScreen");
 const scoreEl = document.getElementById("score");
-
 const highScoreEl = document.getElementById("highScore");
 const finalScoreEl = document.getElementById("finalScore");
-
 const newHighScoreText = document.getElementById("newHighScoreText");
 const canvas = document.getElementById("gameCanvas");
-
 const ctx = canvas.getContext("2d");
 const leftBtn = document.getElementById("leftBtn");
-
 const rightBtn = document.getElementById("rightBtn");
 let gameRunning = false;
-
 let currentSpeed = 5;
 let score = 0;
-
 let highScore = localStorage.getItem("death_lane_highscore") || 0;
 let roadOffsetY = 0;
-
 let speedTimer = null;
 let particles = [];
 highScoreEl.innerText = highScore;
-
 // Player Car Configuration
-
 const player = {
   x: canvas.width / 2 - 18,
   y: canvas.height - 100,
@@ -40,206 +29,147 @@ const player = {
   dx: 0,
   color: "#ff2a3b"
 };
-
 let traffic = [];
 const carColors = ["#00d2ff", "#ffb703", "#06d6a0", "#9d4edd", "#e0e1dd"];
-
 // --- AUDIO SYNTHESIZER ---
-
 let audioCtx = null;
 let engineOsc = null;
 let engineGain = null;
 function initAudio() {
-  
   if (!audioCtx) {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   }
-  
   if (audioCtx.state === 'suspended') {
     audioCtx.resume();
   }
 }
-
 function startEngineSound() {
   initAudio();
   stopEngineSound();
-  
   engineOsc = audioCtx.createOscillator();
   engineGain = audioCtx.createGain();
   engineOsc.type = "sawtooth";
-  
   engineOsc.frequency.setValueAtTime(55, audioCtx.currentTime);
   engineGain.gain.setValueAtTime(0.08, audioCtx.currentTime);
   engineOsc.connect(engineGain);
-  
   engineGain.connect(audioCtx.destination);
   engineOsc.start();
 }
-
 function updateEnginePitch() {
   if (engineOsc && audioCtx) {
     let freq = 55 + (currentSpeed - 5) * 12;
-    
     engineOsc.frequency.setTargetAtTime(freq, audioCtx.currentTime, 0.1);
   }
 }
-
 function stopEngineSound() {
   if (engineOsc) {
-    
     try {
       engineOsc.stop();
       engineOsc.disconnect();
-      
     } catch(e) {}
     engineOsc = null;
   }
 }
-
 function playStartSound() {
   initAudio();
-  
   let osc = audioCtx.createOscillator();
   let gain = audioCtx.createGain();
-  
   osc.type = "triangle";
   osc.frequency.setValueAtTime(220, audioCtx.currentTime);
-  
   osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.4);
   gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
-  
   gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
   osc.connect(gain);
-  
   gain.connect(audioCtx.destination);
   osc.start();
-  
   osc.stop(audioCtx.currentTime + 0.4);
 }
-
 function playCrashSound() {
   initAudio();
   let bufferSize = audioCtx.sampleRate * 0.6;
-  
   let buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
   let data = buffer.getChannelData(0);
-  
   for (let i = 0; i < bufferSize; i++) {
     data[i] = Math.random() * 2 - 1;
   }
-  
   let noise = audioCtx.createBufferSource();
   noise.buffer = buffer;
-  
   let filter = audioCtx.createBiquadFilter();
   filter.type = "lowpass";
-  
   filter.frequency.setValueAtTime(800, audioCtx.currentTime);
   filter.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.6);
-  
   let gain = audioCtx.createGain();
   gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
-  
   gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.6);
   noise.connect(filter);
-  
   filter.connect(gain);
   gain.connect(audioCtx.destination);
-  
   noise.start();
 }
-
 // --- CONTROLS ---
-
 startBtn.addEventListener("click", () => {
   startScreen.classList.add("hidden");
   gameScreen.classList.remove("hidden");
   startGame();
 });
-
 restartBtn.addEventListener("click", () => {
   gameOverScreen.classList.add("hidden");
   startGame();
 });
-
 document.addEventListener("keydown", (e) => {
   if (!gameRunning) return;
   if (e.key === "ArrowLeft" || e.key === "a") player.dx = -player.speed;
   if (e.key === "ArrowRight" || e.key === "d") player.dx = player.speed;
 });
-
 document.addEventListener("keyup", (e) => {
   if (e.key === "ArrowLeft" || e.key === "ArrowRight" || e.key === "a" || e.key === "d") {
     player.dx = 0;
   }
 });
-
 // Mobile Controls
-
 leftBtn.addEventListener("touchstart", (e) => { e.preventDefault(); player.dx = -player.speed; });
 leftBtn.addEventListener("touchend", () => { player.dx = 0; });
-
 rightBtn.addEventListener("touchstart", (e) => { e.preventDefault(); player.dx = player.speed; });
 rightBtn.addEventListener("touchend", () => { player.dx = 0; });
-
 leftBtn.addEventListener("mousedown", () => { player.dx = -player.speed; });
 leftBtn.addEventListener("mouseup", () => { player.dx = 0; });
-
 rightBtn.addEventListener("mousedown", () => { player.dx = player.speed; });
 rightBtn.addEventListener("mouseup", () => { player.dx = 0; });
-
 // --- GAME CORE ---
-
 function startGame() {
   traffic = [];
-  
   particles = [];
   score = 0;
-  
   currentSpeed = 5;
   scoreEl.innerText = score;
-  
   player.x = canvas.width / 2 - player.width / 2;
   player.dx = 0;
-  
   gameRunning = true;
   playStartSound();
-  
   startEngineSound();
   if (speedTimer) clearInterval(speedTimer);
-  
   speedTimer = setInterval(() => {
     if (gameRunning) {
-      
       currentSpeed += 0.8;
       updateEnginePitch();
     }
-    
   }, 10000);
-
   gameLoop();
 }
-
 function spawnTraffic() {
   const lanes = [20, 100, 180, 260];
-  
   const randomLane = lanes[Math.floor(Math.random() * lanes.length)];
   const randomColor = carColors[Math.floor(Math.random() * carColors.length)];
-  
   const tooClose = traffic.some(car => car.x === randomLane && car.y < 120);
   if (!tooClose) {
-    
     traffic.push({
       x: randomLane,
       y: -80,
-      
       width: 36,
       height: 64,
-      
       speed: currentSpeed - (Math.random() * 1.5),
       color: randomColor
     });
-    
   }
 }
 function update() {
@@ -258,7 +188,6 @@ function update() {
       alpha: 0.8
     });
   }
-  
   for (let i = 0; i < particles.length; i++) {
     let p = particles[i];
     p.y += p.vy;
@@ -268,11 +197,9 @@ function update() {
       i--;
     }
   }
-  
   if (Math.random() < 0.028) {
     spawnTraffic();
   }
-  
   for (let i = 0; i < traffic.length; i++) {
     let car = traffic[i];
     car.y += currentSpeed;
@@ -292,7 +219,6 @@ function update() {
     }
   }
 }
-
 function drawRoad() {
   ctx.fillStyle = "#22222b";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
